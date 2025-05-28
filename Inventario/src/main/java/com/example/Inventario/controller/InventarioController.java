@@ -3,6 +3,7 @@ package com.example.Inventario.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,37 +23,37 @@ public class InventarioController {
     private InventarioService inventarioService;
 
     @PostMapping("/guardar")
-    public Inventario postPersona(@RequestBody Inventario inventario) {
-        for (Inventario id : inventarioService.listarProductos()) {
-            if (id.getNombre().equalsIgnoreCase(inventario.getNombre())) {
-                return null; // Producto ya existe
-            }
-        }
-        return inventarioService.guardarProductos(inventario);
+    public ResponseEntity<Inventario> guardarProductos(@RequestBody Inventario inventario) {
+        Inventario nuInventario = inventarioService.guardarProductos(inventario);
+        return ResponseEntity.ok(nuInventario);
     }
 
     @GetMapping
-    public List<Inventario> getProductos() {
-        return inventarioService.listarProductos();
+    public ResponseEntity<List<Inventario>> listarProductos() {
+        List<Inventario> inventarios = inventarioService.listarProductos();
+        return ResponseEntity.ok(inventarios);
     }
 
     @GetMapping("/buscar/{id}")
-    public Inventario getProducto(@PathVariable int id) {
-        return inventarioService.buscarxId(id);
-    }
-
-    @GetMapping("/buscar/{nombre}")
-    public Inventario getProductoNombre(@PathVariable String nombre) {
-        return inventarioService.buscaxNombre(nombre);
+    public ResponseEntity<Inventario> buscarxId(@PathVariable int id) {
+        return inventarioService.buscarxId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/modificar/{id}")
-    public Inventario putProducto(@PathVariable int id, @RequestBody Inventario producto) {
-        return inventarioService.modificarProducto(id, producto);
+    public ResponseEntity<Inventario> modificarProducto(@PathVariable int id, @RequestBody Inventario producto) {
+        Inventario updatedInventario = inventarioService.modificarProducto(id, producto);
+        if (updatedInventario != null) {
+            return ResponseEntity.ok(updatedInventario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/eliminar/{id}")
-    public String deleteProducto(@PathVariable int id) {
-        return inventarioService.eliminarProducto(id);
+    public ResponseEntity<Void> eliminarProducto(@PathVariable int id) {
+        inventarioService.eliminarProducto(id);
+        return ResponseEntity.noContent().build();
     }
 }

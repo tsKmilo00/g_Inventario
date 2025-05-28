@@ -1,6 +1,7 @@
 package com.example.Inventario.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,24 +15,27 @@ public class InventarioService {
    private InventarioRepository inventarioRepository;
 
    public Inventario guardarProductos(Inventario inventario) {
-        return inventarioRepository.create(inventario);
+        inventario.setId(0);
+        return inventarioRepository.save(inventario);
    }
     public List<Inventario> listarProductos() {
-          return inventarioRepository.readAll();
+          return inventarioRepository.findAll();
     }
-    public Inventario buscarxId(int id) {
-        return inventarioRepository.read(id);
-    }
-
-    public Inventario buscaxNombre(String nombre) {
-        return inventarioRepository.readxNombre(nombre);
+    public Optional<Inventario> buscarxId(int id) {
+        return inventarioRepository.findById(id);
     }
 
     public Inventario modificarProducto(int id, Inventario producto) {
-        return inventarioRepository.update(id, producto);
+        Optional<Inventario> optionalInventario = inventarioRepository.findById(id);
+        if (optionalInventario.isPresent()){
+            Inventario inventario = optionalInventario.get();
+            inventario.setNombre(producto.getNombre());
+            return inventarioRepository.save(inventario);
+        }
+        return null; 
     }
 
-    public String eliminarProducto(int id) {
-        return inventarioRepository.delete(id);
+    public void eliminarProducto(int id) {
+        inventarioRepository.deleteById(id);
     }
 }
