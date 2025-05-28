@@ -1,60 +1,56 @@
 [
   {
-    "id": 1,
     "nombre": "Laptop HP",
     "precio": 899.99,
     "stock": 15
   },
   {
-    "id": 2,
     "nombre": "Mouse inalámbrico",
     "precio": 25.50,
     "stock": 42
   },
   {
-    "id": 3,
     "nombre": "Teclado mecánico",
     "precio": 75.30,
     "stock": 18
   },
   {
-    "id": 4,
     "nombre": "Monitor 24 pulgadas",
     "precio": 199.99,
-    "stock": 7
-  },
-  {
-    "id": 5,
+    "stock": 12
+  }
+  { 
     "nombre": "Disco SSD 500GB",
     "precio": 59.90,
     "stock": 23
   },
   {
-    "id": 6,
+    
     "nombre": "Auriculares Bluetooth",
     "precio": 45.20,
     "stock": 31
   },
   {
-    "id": 7,
+    
     "nombre": "Webcam HD",
     "precio": 35.75,
     "stock": 12
   },
   {
-    "id": 8,
+    
     "nombre": "Impresora multifunción",
     "precio": 129.95,
     "stock": 5
   },
   {
-    "id": 9,
+    
     "nombre": "Tablet 10 pulgadas",
     "precio": 159.00,
     "stock": 9
   },
   {
-    "id": 10,
+
+
     "nombre": "Router WiFi",
     "precio": 79.50,
     "stock": 14
